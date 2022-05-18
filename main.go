@@ -10,12 +10,21 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"go.uber.org/zap"
 	"time"
+        "github.com/prometheus/client_golang/prometheus"
+        "github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type server struct {
 	redis redis.UniversalClient
 	logger *zap.Logger
 }
+
+var pingCounter = prometheus.NewCounter(
+   prometheus.CounterOpts{
+       Name: "ping_request_count",
+       Help: "No of request handled by Ping handler",
+   },
+)
 
 func main() {
 	logger, err := zap.NewProduction()
@@ -35,8 +44,11 @@ func main() {
 	}
 
 	router := httprouter.New()
+        
+        prometheus.MustRegister(pingCounter)
 
 	router.GET("/", srv.indexHandler)
+        router.Handler("GET", "/metrics", promhttp.Handler())
 
 	logger.Info("server started on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", router))
@@ -52,7 +64,7 @@ func (s *server) indexHandler(w http.ResponseWriter, r *http.Request, _ httprout
 	} else {
 		s.logger.Info("got updated_time")
 	}
-
+        pingCounter.Inc()
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "hello world: updated_time=%s\n", v)
 }

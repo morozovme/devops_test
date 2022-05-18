@@ -8,4 +8,5 @@ require (
 	github.com/lib/pq v1.10.2
 	github.com/rs/cors v1.8.0
 	go.uber.org/zap v1.19.0
+        github.com/prometheus/client_golang v1.12.2
 )
