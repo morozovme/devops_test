@@ -24,6 +24,28 @@ services:
     networks:
       - maingo-network
 
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    networks:
+      - maingo-network
+
+  grafana:
+    image: grafana/grafana:5.4.4
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./datasource.ini:/etc/grafana/provisioning/datasource.ini
+    networks:
+      - maingo-network
+
 networks:
   maingo-network:
     driver: bridge
