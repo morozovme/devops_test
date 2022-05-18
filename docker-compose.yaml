@@ -11,6 +11,12 @@ services:
       - maingo-network
     env_file:
       - ./.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://main:8080"]
+      interval: 30s
+      timeout: 5s
+      retries: 1
+      start_period: 5s
 
   redis:
     container_name: redis

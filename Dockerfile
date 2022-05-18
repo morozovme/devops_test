@@ -6,6 +6,9 @@ COPY go.mod ./
 
 COPY go.sum ./
 
+# install curl for healthcheck
+RUN apk add curl
+
 RUN go mod download
 
 COPY *.go ./
