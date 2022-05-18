@@ -24,6 +24,13 @@ services:
     networks:
       - maingo-network
 
+  redis-exporter:
+    container_name: redis-exporter
+    image: oliver006/redis_exporter
+    command: -redis.addr redis://redis:6379
+    networks:
+      - maingo-network
+
   prometheus:
     image: prom/prometheus:latest
     volumes:
