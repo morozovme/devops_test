@@ -49,7 +49,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./datasource.ini:/etc/grafana/provisioning/datasource.ini
+      - ./datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
     networks:
       - maingo-network
 
