@@ -50,6 +50,8 @@ services:
       - "3000:3000"
     volumes:
       - ./datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - ./maingo.json:/var/lib/grafana/dashboards/maingo.json
     networks:
       - maingo-network
 
