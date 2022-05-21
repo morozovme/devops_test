@@ -52,6 +52,7 @@ services:
       - ./datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
       - ./dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
       - ./maingo.json:/var/lib/grafana/dashboards/maingo.json
+      - ./redis.json:/var/lib/grafana/deshboards/redis.json
     networks:
       - maingo-network
 
